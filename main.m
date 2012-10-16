@@ -3,11 +3,11 @@ load neuron.conf;
 activation = menu("Wybierz funkcje aktywacji","Liniowa","Skokowa","Sigmoidalna");
 
 if (activation==1)
-   a=1;
-   b=0;
+   a = input("Parametr a: ");
+   b = input("Parametr b: ");
    activationFunction = @(X) linear(X,a,b);
 elseif (activation==2)
-   a=7;
+   a = input("Prog: ");
    activationFunction = @(X) threshold(X,a);
 elseif (activation==3)
    activationFunction = @sigmoid;
