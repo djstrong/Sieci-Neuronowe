@@ -16,7 +16,7 @@
 % XOR
 
 
-function nn(activationFunction,Thetas,data,results)
+function dataX = nn(activationFunction,Thetas,data)
     inputLayerSize = size(data,2);
     % sprawdzenie poprawności wymiarów
     previosLayerSize = inputLayerSize;
@@ -32,9 +32,9 @@ function nn(activationFunction,Thetas,data,results)
     for i=1:length(Thetas)
       dataX = activationFunction([-1.0*ones(m,1) dataX]*Thetas{i}');
     end
-    dataX
+    %dataX
 
-    printf('Błąd: %0.4f\n', mean((dataX-results).^2));
+    %printf('Błąd: %0.4f\n', mean((dataX-results).^2));
 
 	%kod dla wielu klas, gdzie kazde wyjscie oznacza klase
 	%[x,predicted] = max(dataX, [], 2);
