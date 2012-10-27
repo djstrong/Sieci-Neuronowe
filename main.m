@@ -38,6 +38,5 @@ printf('Błąd: %0.4f\n', mean((answers-results).^2));
 x=linspace(0,1,50);
 y=linspace(0,1,50);
 [xx,yy]=meshgrid(x,y);
-
-meshc(xx,yy,reshape( nn(activationFunction,thetas,[xx(:) yy(:)]), size(xx)) )
+meshc(xx,yy,double(reshape( nn(activationFunction,thetas,[xx(:) yy(:)]), size(xx))) )
 pause
