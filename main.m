@@ -16,8 +16,8 @@ endif
 
 thetas = {};
 if (random_weights>0)
-   input_cols = size(input_data,2)
-   cols = input_cols
+   input_cols = size(input_data,2);
+   cols = input_cols;
    for i=1:size(layer_neuron,1)
 	thetas{i}=rand(layer_neuron(i,1),cols+1);
 	cols=size(thetas{i}, 1);
