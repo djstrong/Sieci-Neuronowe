@@ -14,7 +14,7 @@ elseif (activation==3)
    activationFunction = @sigmoid;
 endif
 
-thetas = {}
+thetas = {};
 if (random_weights>0)
    input_cols = size(input_data,2)
    cols = input_cols
@@ -22,6 +22,7 @@ if (random_weights>0)
 	thetas{i}=rand(layer_neuron(i,1),cols+1);
 	cols=size(thetas{i}, 1);
    end
+   thetas
 else
    thetas = weights;
 endif
