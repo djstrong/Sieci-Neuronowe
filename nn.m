@@ -28,11 +28,13 @@ function nn(activationFunction,Thetas,data,results)
     % obliczenie
     dataX = data;
     m = size(dataX, 1);
+
     for i=1:length(Thetas)
-      dataX = activationFunction([ones(m,1) dataX]*Thetas{i}');
+      dataX = activationFunction([-1.0*ones(m,1) dataX]*Thetas{i}');
     end
-    dataX<0.5
-    printf('Dokładność: %0.2f\n', mean(double((dataX<0.5)==results)) * 100);
+    dataX
+
+    printf('Błąd: %0.4f\n', mean((dataX-results).^2));
 
 	%kod dla wielu klas, gdzie kazde wyjscie oznacza klase
 	%[x,predicted] = max(dataX, [], 2);
