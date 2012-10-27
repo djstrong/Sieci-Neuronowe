@@ -1,4 +1,5 @@
-load neuron.conf;
+conf_file = argv(){1};
+load(conf_file);
 
 activation = menu("Wybierz funkcje aktywacji","Liniowa","Skokowa","Sigmoidalna");
 
