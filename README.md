@@ -24,10 +24,53 @@ Przykładowe pliki konfiguracyjne są załączone do projektu.
 Jako parametr należy podać plik konfiguracyjny, np.:
 
 ```bash
-$ octave main.m neurony.conf
+$ octave -q main.m neurony.conf
 ```
 
 Po uruchomieniu należy wybrać odpowiednią funkcję aktywacji oraz podać jej parametry.
+
+
+Przykład
+--------
+
+Spróbujemy użyć programu do symulowania funkcji logicznej XOR.
+
+Plik konfiguracyjny: [XORsigmoid.conf](https://github.com/djstrong/Sieci-Neuronowe/blob/master/XORsigmoid.conf)
+
+Po uruchomieniu programu zobaczymy:
+
+```bash
+$ octave -q main.m XORsigmoid.conf
+
+Wybierz funkcje aktywacji
+
+  [ 1] Liniowa
+  [ 2] Skokowa
+  [ 3] Sigmoidalna
+
+pick a number, any number: 
+```
+
+Wybieramy *3* i otrzymujemy wynik:
+```bash
+input_data =
+
+   0   0
+   0   1
+   1   0
+   1   1
+
+answers =
+
+   0.047082
+   0.952536
+   0.952534
+   0.056104
+
+Błąd: 0.0025
+```
+
+
 
 
 
