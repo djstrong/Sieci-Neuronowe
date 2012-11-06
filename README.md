@@ -70,6 +70,9 @@ answers =
 Błąd: 0.0025
 ```
 
+Gdy sieć posiada 2 wejścia i 1 wyjście wygenerowany zostanie wykres. 
+W tym przykładzie wygląda on tak:
+! [wykres.jpg](img/wykres.jpg)
 
 
 
