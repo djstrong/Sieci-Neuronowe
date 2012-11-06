@@ -36,9 +36,11 @@ input_data
 answers
 printf('Błąd: %0.4f\n', mean((answers-results).^2));
 
-% plot chart
-x=linspace(0,1,50);
-y=linspace(0,1,50);
-[xx,yy]=meshgrid(x,y);
-meshc(xx,yy,double(reshape( nn(activationFunction,thetas,[xx(:) yy(:)]), size(xx))) )
-pause
+% plot chart if 2 inputs and 1 output
+if (size(input_data,2)==2 && size(results,2)==1)
+    x=linspace(0,1,50);
+    y=linspace(0,1,50);
+    [xx,yy]=meshgrid(x,y);
+    meshc(xx,yy,double(reshape( nn(activationFunction,thetas,[xx(:) yy(:)]), size(xx))) )
+    pause
+endif
