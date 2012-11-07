@@ -18,3 +18,5 @@ function dataX = nn(activationFunction,Thetas,data)
     end
 
 endfunction
+
+%funkcje aktywacji, bias, przedzial losowania dla akzdej warstwy, nazwy zmiennych

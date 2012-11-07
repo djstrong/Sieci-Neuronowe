@@ -34,10 +34,13 @@ answers = nn(activationFunction,thetas,input_data);
 % show answers
 input_data
 answers
-printf('Błąd: %0.4f\n', mean((answers-results).^2));
+
+if (size(results,2)==1 && size(input_data,1)==size(results,1))
+  printf('Błąd: %0.4f\n', mean((answers-results).^2));
+endif
 
 % plot chart if 2 inputs and 1 output
-if (size(input_data,2)==2 && size(results,2)==1)
+if (size(input_data,2)==2 && size(results,2)==1 && size(input_data,1)==size(results,1))
     x=linspace(0,1,50);
     y=linspace(0,1,50);
     [xx,yy]=meshgrid(x,y);
