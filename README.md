@@ -12,6 +12,7 @@ Składa się z 3 części:
 * moduł nn.m wyliczający wartości zwracane przez sieć neuronową
 * 3 małe moduły na funkcje aktywacji
 
+![Sequence%20Diagram1.jpg](https://raw.github.com/djstrong/Sieci-Neuronowe/master/img/Sequence%20Diagram1.jpg)
 
 Użycie
 -------
