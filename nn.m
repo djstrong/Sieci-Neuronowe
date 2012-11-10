@@ -1,22 +1,16 @@
-function dataX = nn(activationFunction,Thetas,data)
+function dataX = nn(layers, input_data)
     % sprawdzenie poprawności wymiarów
-    inputLayerSize = size(data,2);
-    previosLayerSize = inputLayerSize;
-    for i=1:length(Thetas)
-      assert(previosLayerSize+1, size(Thetas{i}, 2));
-      previosLayerSize=size(Thetas{i}, 1);
+    previosLayerSize = size(input_data,2); %inputLayerSize
+    for i=1:length(layers)
+      assert(previosLayerSize+1, size(layers{i}.weights, 2));
+      previosLayerSize=size(layers{i}.weights, 1);
     end
 
     % obliczenie
-    dataX = data;
+    dataX = input_data;
     m = size(dataX, 1);
 
-    bias = -1.0;
-
-    for i=1:length(Thetas) % dla każdej warstwy
-      dataX = activationFunction([bias*ones(m,1) dataX]*Thetas{i}');
+    for i=1:length(layers) % dla każdej warstwy
+      dataX = layers{i}.activation_function([layers{i}.bias*ones(m,1) dataX]*layers{i}.weights');
     end
-
 endfunction
-
-%funkcje aktywacji, bias, przedzial losowania dla akzdej warstwy, nazwy zmiennych
