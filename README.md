@@ -8,7 +8,7 @@ Ogólnie
 Projekt jest pisany jako skrypt do uruchomienia przez środowisko Octave.
 
 Składa się z 3 części:
-* moduł main.m ładujący konfigurację i komunikujący się z użytkownikiem poprzez menu
+* moduł main.m ładujący konfigurację, obliczający błąd i rysujący wykres
 * moduł nn.m wyliczający wartości zwracane przez sieć neuronową
 * 3 małe moduły na funkcje aktywacji
 
@@ -17,7 +17,7 @@ Użycie
 -------
 
 ### Definicja sieci
-Definicja sieci znajduje się w pliku konfiguracyjnym. Jego format odpowiada formatowi zapisywania zmiennych do pliku przez Octave. 
+Definicja sieci znajduje się w pliku konfiguracyjnym. Jest on skryptem w jezyku Octave (ze względu na czytelność nie stosujemy formatu zapisu zmiennych przez Octave). 
 Przykładowe pliki konfiguracyjne są załączone do projektu.
 
 ### Uruchomienie programu
@@ -27,31 +27,21 @@ Jako parametr należy podać plik konfiguracyjny, np.:
 $ octave -q main.m neurony.conf
 ```
 
-Po uruchomieniu należy wybrać odpowiednią funkcję aktywacji oraz podać jej parametry.
-
 
 Przykład
 --------
 
 Spróbujemy użyć programu do symulowania funkcji logicznej XOR.
 
-Plik konfiguracyjny: [XORsigmoid.conf](https://github.com/djstrong/Sieci-Neuronowe/blob/master/XORsigmoid.conf)
+Plik konfiguracyjny: [XOR_sigmoid_learned.conf](https://github.com/djstrong/Sieci-Neuronowe/blob/master/XOR_sigmoid_learned.conf)
 
 Po uruchomieniu programu zobaczymy:
 
 ```bash
-$ octave -q main.m XORsigmoid.conf
-
-Wybierz funkcje aktywacji
-
-  [ 1] Liniowa
-  [ 2] Skokowa
-  [ 3] Sigmoidalna
-
-pick a number, any number: 
+$ octave -q main.m XOR_sigmoid_learned.conf
 ```
 
-Wybieramy *3* i otrzymujemy wynik:
+Otrzymujemy wynik:
 ```bash
 input_data =
 
