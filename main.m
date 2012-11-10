@@ -5,6 +5,8 @@ if (random_weights==true)
    cols = size(input_data,2);
    for i=1:length(layers)
 	layers{i}.weights = unifrnd(layers{i}.rand_min, layers{i}.rand_max, layers{i}.neurons, cols+1);
+	printf('Wylosowane wagi warstwy %d:\n', i);
+	layers{i}.weights
 	cols=layers{i}.neurons;
    end
 endif
