@@ -13,7 +13,20 @@ endif
 
 
 % calculate
-answers = nn(layers, input_data);
+
+input_rows = size(input_data, 1);
+for step=1:steps
+        answers=input_data;
+	for i=1:length(layers)
+	    layer = layers{i};
+
+	    if (strcmp(layer.type,'normal')==1)
+		answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
+	    elseif (strcmp(layer.type,'kohonen')==1)
+		answers = kohonen(layer,answers,step);
+	    endif
+	end
+end
 
 % show answers
 input_data
