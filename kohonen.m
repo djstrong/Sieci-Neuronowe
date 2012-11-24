@@ -5,7 +5,8 @@
 
 
 function result=kohonen(layer,input_data,step)
-    m = size(input_data,1);
+  m = size(input_data,1);
+  if(layer.learn)
     if (isfield(layer,'wins')==0)
 	layer.wins = {};
     endif
@@ -23,10 +24,10 @@ function result=kohonen(layer,input_data,step)
 
 	%poprawic wagi
 	for n=1:layer.neurons
-    	    layer.weights(winner,:)=layer.weights(winner,:)+ layer.learning_coefficient * neighbourhood(winner,n,layer.neighbourhood_coefficient) * ([layer.bias*1 input_data(winner,:)]-layer.weights(winner,:));
+    	    layer.weights(winner,:)=layer.weights(winner,:)+ layer.learning_coefficient * neighbourhood(winner,n,layer) * ([layer.bias*1 input_data(winner,:)]-layer.weights(winner,:));
 	end
     end
-
+  endif
 result = layer.activation_function([layer.bias*ones(m,1) input_data]*layer.weights');
 endfunction
 
