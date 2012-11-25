@@ -16,6 +16,9 @@ endif
 
 input_rows = size(input_data, 1);
 for step=1:steps
+	if (find(epochs==step))
+          epoch = find(epochs==step)
+	endif
         answers=input_data;
 	for i=1:length(layers)
 	    layer = layers{i};
@@ -23,7 +26,7 @@ for step=1:steps
 	    if (strcmp(layer.type,'normal')==1)
 		answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
 	    elseif (strcmp(layer.type,'kohonen')==1)
-		answers = kohonen(layer,answers,step);
+		answers = kohonen(layer,answers,step,epoch);
 	    endif
 	end
 end
