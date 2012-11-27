@@ -41,7 +41,7 @@ function result=kohonen(l,input_data)
 
 	%poprawiamy wagi
 	for n=1:layers{l}.neurons
-    	    layers{l}.weights(n,2:end)=layers{l}.weights(n,2:end) + (neighbourhood(winner,n,layers{l},epoch)*(input_data(input,:)-layers{l}.weights(n,2:end) ));
+    	    layers{l}.weights(n,2:end)=layers{l}.weights(n,2:end) + (layers{l}.learning_coefficient(epoch)*neighbourhood(winner,n,layers{l},epoch)*(input_data(input,:)-layers{l}.weights(n,2:end) ));
 	end
     end
   end
