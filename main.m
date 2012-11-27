@@ -1,5 +1,6 @@
 conf_file = argv(){1};
 source(conf_file);
+profile on
 
 if (random_weights==true)
    cols = size(input_data,2);
@@ -11,33 +12,28 @@ if (random_weights==true)
    end
 endif
 
-
+%input_data = input_data/norm(input_data)
 % calculate
-
+answers = [];
 input_rows = size(input_data, 1);
-for step=1:steps
-	if (find(epochs==step))
-          epoch = find(epochs==step)
-	endif
-        answers=input_data;
-	for i=1:length(layers)
-	    layer = layers{i};
 
-	    if (strcmp(layer.type,'normal')==1 || layer.learn==0)
-		answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
-	    elseif (strcmp(layer.type,'kohonen')==1)
-		answers = kohonen(layer,answers,step,epoch);
-	    endif
-	end
-	if(layer.learn==0)
-		break
-	endif
+
+answers=input_data;
+for i=1:length(layers)
+    layer = layers{i};
+    if (strcmp(layer.type,'normal')==1 || layer.learn==0)
+	answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
+    elseif (strcmp(layer.type,'kohonen')==1)
+	answers = kohonen(i,answers);
+    endif
 end
 
 % show answers
 input_data
 answers
 
+t = profile ('info')
+profexplore(t)
 if (size(expected,2)==1 && size(input_data,1)==size(expected,1))
   printf('Błąd: %0.4f\n', mean((answers-expected).^2));
 endif
