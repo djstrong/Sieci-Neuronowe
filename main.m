@@ -1,7 +1,7 @@
 conf_file = argv(){1};
 source(conf_file);
 profile on
-
+warning("off");
 if (random_weights==true)
    cols = size(input_data,2);
    for i=1:length(layers)

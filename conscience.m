@@ -1,8 +1,5 @@
-function con=conscience(step, wins)
-	wins;
-	x = (ones(size(wins,2),1)*1/step);
-	x;
-	con=abs([wins{:}] - x');
-	con;
+function con=conscience(step,winner,layer,epoch)
+	con = (1.0/step)*ones(layer.neurons,1);
+	con(winner) = -layer.conscience_coefficient(epoch);
 
 endfunction
