@@ -15,7 +15,6 @@ function result=kohonen(l,input_data)
 
   if (isfield(layers{l},'potentials')==0)
 	printf("setting wins\n");
-	layers{l}.potentials = layers{l}.conscience_coefficient(1)*ones(layers{l}.neurons,1);
   endif
   winners = zeros(layers{l}.neurons,1);
 
@@ -25,10 +24,12 @@ function result=kohonen(l,input_data)
         layers{l}.weights
     endif
 
+    potentials = layers{l}.conscience_coefficient(1)*ones(layers{l}.neurons,1);
     for input=1:inputs
+
 	%sprawdzamy ktory zareaguje
 	for n=1:layers{l}.neurons
-	    winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)));
+	    winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)))-potentials(n);
 	end
 	if (any(winners>=layers{l}.conscience_coefficient(epoch)))
 		winners(find(winners<layers{l}.conscience_coefficient(epoch))) = inf;
@@ -37,10 +38,11 @@ function result=kohonen(l,input_data)
 	if(size(winner,1)>1)
 	    winner = winner(1);
 	endif
-	layers{l}.potentials = layers{l}.potentials+conscience(step,winner,layers{l},epoch);
-
+	potentials = potentials+conscience(step,winner,layers{l},epoch);
+	potentials(potentials<0)=0;
 	%poprawiamy wagi
 	for n=1:layers{l}.neurons
+	    
     	    layers{l}.weights(n,2:end)=layers{l}.weights(n,2:end) + (layers{l}.learning_coefficient(epoch)*neighbourhood(winner,n,layers{l},epoch)*(input_data(input,:)-layers{l}.weights(n,2:end) ));
 	end
     end
