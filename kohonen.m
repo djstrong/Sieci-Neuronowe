@@ -9,6 +9,7 @@ function result=kohonen(l,input_data)
   global epochs
   inputs = size(input_data,1);
   inputs
+if (layers{l}.learn)
   for i=1:inputs
       input_data(i,:) = input_data(i,:)/norm(input_data(i,:));
   end
@@ -47,6 +48,7 @@ function result=kohonen(l,input_data)
 	end
     end
   end
+endif
 results = zeros(inputs,layers{l}.neurons);
 for n=1:layers{l}.neurons
     tmp = zeros(inputs,1);
