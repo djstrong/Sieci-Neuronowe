@@ -28,13 +28,15 @@ function result=kohonen(l,input_data)
     for input=1:inputs
 	%sprawdzamy ktory zareaguje
 	for n=1:layers{l}.neurons
-%	    con = layers{l}.conscience_coefficient(epoch)*conscience(step,layers{l}.wins)(n);
-	    winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)));%+con;
+	    winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)));
 	end
 	if (any(winners>=layers{l}.conscience_coefficient(epoch)))
 		winners(find(winners<layers{l}.conscience_coefficient(epoch))) = inf;
 	endif
 	winner = find(winners==min(winners));
+	if(size(winner,1)>1)
+	    winner = winner(1);
+	endif
 	layers{l}.potentials = layers{l}.potentials+conscience(step,winner,layers{l},epoch);
 
 	%poprawiamy wagi

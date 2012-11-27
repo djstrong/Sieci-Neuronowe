@@ -11,7 +11,7 @@ function n_coeff=neighbourhood (winner,neuron,layer,epoch)
 	endif
 	if (n==0)
 		n_coeff = 1;
-	elseif (n <=layer.neighbourhood_width)
+	elseif (n <=layer.neighbourhood_width(epoch))
 		n_coeff = 1.0/n;
 	else
 		n_coeff = 0;
