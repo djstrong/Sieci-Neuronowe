@@ -9,10 +9,11 @@ function result=kohonen(l,input_data)
   global epochs
   inputs = size(input_data,1);
   inputs
-if (layers{l}.learn)
   for i=1:inputs
       input_data(i,:) = input_data(i,:)/norm(input_data(i,:));
   end
+if (layers{l}.learn)
+
 
   if (isfield(layers{l},'potentials')==0)
 	printf("setting wins\n");
