@@ -1,14 +1,14 @@
-function result=kohonen(l,input_data)
+function result=kohonen(l,input_data,step,epoch)
   global layers
   global epochs
   inputs = size(input_data,1);
-  inputs
+  inputs;
   for i=1:inputs
       input_data(i,:) = input_data(i,:)/norm(input_data(i,:));
   end
   
   
-if (layers{l}.learn)
+if (layers{l}.learn && epoch>0)
 
 
   if (isfield(layers{l},'potentials')==0)
@@ -16,14 +16,15 @@ if (layers{l}.learn)
   endif
   winners = zeros(layers{l}.neurons,1);
   
-  for step=1:layers{l}.learn_steps
-    if (find(epochs==step))
-        epoch = find(epochs==step)
-        layers{l}.weights
-	potentials = layers{l}.conscience_coefficient(epoch)*ones(layers{l}.neurons,1);
+  %for step=1:layers{l}.learn_steps
+
+    if (layers{l}.epoch!=epoch)
+	layers{l}.potentials = layers{l}.conscience_coefficient(epoch)*ones(layers{l}.neurons,1);
+
+	layers{l}.epoch=epoch;
     endif
 
-    
+potentials = layers{l}.potentials ;
     %for input=1:inputs
     input=mod(step , inputs)+1;
 	%sprawdzamy ktory zareaguje
@@ -49,25 +50,25 @@ if (layers{l}.learn)
 	%neigh=zeros(layers{l}.neurons,1);
 	%neigh=[1:layers{l}.neurons]-winner
 
-	%for n=1:layers{l}.neurons
+	for n=1:layers{l}.neurons
 	%    neigh(n) = neighbourhood(winner,n,layers{l},epoch);
 	    
-    	    %layers{l}.weights(n,2:end)=layers{l}.weights(n,2:end) + (layers{l}.learning_coefficient(epoch)*neighbourhood(winner,n,layers{l},epoch)*(input_data(input,:)-layers{l}.weights(n,2:end) ));
-	%end
+    	    layers{l}.weights(n,2:end)=layers{l}.weights(n,2:end) + (layers{l}.learning_coefficient(epoch)*neighbourhood(winner,n,layers{l},epoch)*(input_data(input,:)-layers{l}.weights(n,2:end) ));
+	end
 
 	% TODO dla wiekszej ilosci wymairow
 	%neigh=abs([1:layers{l}.neurons]-winner);
 	%neigh(neigh>layers{l}.neighbourhood_width(epoch))=inf;
 	%neigh=1.0./(neigh'+1)
-	neigh=neighbourhoods(winner,layers{l},epoch);
+	%neigh=neighbourhoods(winner,layers{l},epoch)
 
 	%layers{l}.weights
-	layers{l}.weights(:,2:end) += layers{l}.learning_coefficient(epoch)*neigh.*(input_data(input,:)-layers{l}.weights(n,2:end) );
+	%layers{l}.weights(:,2:end) += layers{l}.learning_coefficient(epoch)*neigh.*(input_data(input,:)-layers{l}.weights(n,2:end) );
 
 	%layers{l}.weights
 	%return
     %end
-  end
+  %end
 endif
 results = zeros(inputs,layers{l}.neurons);
 for n=1:layers{l}.neurons
