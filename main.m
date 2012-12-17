@@ -30,13 +30,22 @@ for step=1:learn_steps
 	    if(find(layers{i}.epochs==step))
 		epochs{i} = find(layer.epochs==step);
 		printf("layer %d epoch=%d\n",i,epochs{i});
+		print = true;
 	    endif
 	    if (strcmp(layer.type,'normal')==1)
 		answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
 	    elseif (strcmp(layer.type,'kohonen')==1)
 		answers = kohonen(i,answers,step,epochs{i});
+		if(print)
+			answers
+			print = false;
+		endif 
 	    elseif (strcmp(layer.type,'grossberg')==1)
 		answers = grossberg(i,answers,expected,epochs{i});
+		if(print)
+			answers
+			print = false;
+		endif 
 	    endif
 	end
 end

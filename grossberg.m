@@ -4,16 +4,21 @@ function result=grossberg(l,input_data,expected,epoch)
 		input = [zeros(size(input_data,1),1) input_data];
 		coeff =layers{l}.coeffs(epoch);
 		output = layers{l}.activation_function([zeros(size(input_data,1),1) input_data]*layers{l}.weights');
-		input_data
-		expected
-		output
+		input_data;
+		expected;
+		output;
 
 		for in=1:size(input,1)
 			row = input(in,1:end);
 			[winner_weight,win_pos] = max(row);
-			for n=1:layers{l}.neurons	
-				diff = coeff*(expected(in,n)-layers{l}.weights(n,win_pos))
+			for n=1:layers{l}.neurons
+			   if (strcmp(layers{l}.rule,'widrow')==0)
+				diff = coeff*(expected(in,n)-layers{l}.weights(n,win_pos));
 				layers{l}.weights(n,win_pos) += diff;
+			   else %delta
+				diff = coeff*(expected(in,n)-output(in,n))*sigmoidDerivative(output(in,n));
+				layers{l}.weights(n,win_pos) += diff;				
+			   endif
 			end
 		end
 	result = output;
