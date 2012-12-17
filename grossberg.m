@@ -7,11 +7,12 @@ function result=grossberg(l,input_data,expected,epoch)
 		input_data
 		expected
 		output
+
 		for in=1:size(input,1)
-			for n=1:layers{l}.neurons
-				row = input(in,1:end);
-				[winner_weight,win_pos] = max(row);
-				diff = -coeff*(expected(in,n)-layers{l}.weights(n,win_pos))
+			row = input(in,1:end);
+			[winner_weight,win_pos] = max(row);
+			for n=1:layers{l}.neurons	
+				diff = coeff*(expected(in,n)-layers{l}.weights(n,win_pos))
 				layers{l}.weights(n,win_pos) += diff;
 			end
 		end
