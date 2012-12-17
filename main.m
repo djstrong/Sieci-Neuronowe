@@ -44,8 +44,9 @@ end
 % show answers
 input_data
 answers
-answers-expected
 layers{1}.weights
+answers-expected
+
 
 
 if (size(expected,2)==1 && size(input_data,1)==size(expected,1))

@@ -23,13 +23,14 @@ if (layers{l}.learn && epoch>0)
 
 	layers{l}.epoch=epoch;
     endif
-
-potentials = layers{l}.potentials ;
     %for input=1:inputs
     input=mod(step , inputs)+1;
+    if(input==0)
+	layers{l}.potentials = layers{l}.conscience_coefficient(epoch)*ones(layers{l}.neurons,1);
+    endif
 	%sprawdzamy ktory zareaguje
 	for n=1:layers{l}.neurons
-	    if (potentials(n)>=layers{l}.conscience_coefficient(epoch))
+	    if (layers{l}.potentials(n)>=layers{l}.conscience_coefficient(epoch))
 %	      winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)));%-potentials(n); %poprawic na iloczyn
 	      winners(n) = dot(input_data(input,:), (layers{l}.weights(n,2:end)));
 	    else
@@ -44,8 +45,8 @@ potentials = layers{l}.potentials ;
 	%if(size(winner,1)>1)
 	%    winner = winner(1);
 	%endif
-	potentials = potentials+conscience(layers{l}.neurons,winner,layers{l},epoch);
-	potentials(potentials>1.0)=1.0;
+	layers{l}.potentials += conscience(layers{l}.neurons,winner,layers{l},epoch);
+	layers{l}.potentials(layers{l}.potentials>1.0)=1.0;
 	%poprawiamy wagi
 	%neigh=zeros(layers{l}.neurons,1);
 	%neigh=[1:layers{l}.neurons]-winner
