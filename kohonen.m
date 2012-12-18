@@ -4,9 +4,11 @@ function result=kohonen(l,input_data,step,epoch)
   inputs = size(input_data,1);
   inputs;
   for i=1:inputs
-      input_data(i,:) = input_data(i,:)/norm(input_data(i,:));
+      denom = norm(input_data(i,:));
+      if(denom>0)
+	      input_data(i,:) = input_data(i,:)/denom;
+      endif
   end
-  
   
 if (layers{l}.learn && epoch>0)
 
@@ -53,7 +55,10 @@ if (layers{l}.learn && epoch>0)
 
 	for n=1:layers{l}.neurons
 	%    neigh(n) = neighbourhood(winner,n,layers{l},epoch);
-	    
+%	    printf("input_data(%d,:)",input);
+%	    input_data(input,:)
+%printf('layers{l}.wieghts(%d,2:end)',n);
+%            layers{l}.weights(n,2:end)
     	    layers{l}.weights(n,2:end)=layers{l}.weights(n,2:end) + (layers{l}.learning_coefficient(epoch)*neighbourhood(winner,n,layers{l},epoch)*(input_data(input,:)-layers{l}.weights(n,2:end) ));
 	end
 
