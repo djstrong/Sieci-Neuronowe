@@ -33,7 +33,7 @@ if (layers{l}.learn && epoch>0)
 	%sprawdzamy ktory zareaguje
 	for n=1:layers{l}.neurons
 	    if (layers{l}.potentials(n)>=layers{l}.conscience_coefficient(epoch))
-%	      winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)));%-potentials(n); %poprawic na iloczyn
+	      %winners(n) = norm(input_data(input,:)-(layers{l}.weights(n,2:end)));%-potentials(n); %poprawic na iloczyn
 	      winners(n) = dot(input_data(input,:), (layers{l}.weights(n,2:end)));
 	    else
 		winners(n)=-inf;
@@ -89,7 +89,7 @@ for i=1:inputs
     %results
     %tmp
     %find(tmp==max(tmp))
-    results(i, find(tmp==max(tmp)) ) = 1;
+    results(i, find(tmp==max(tmp))(1) ) = 1;
     %results
 end
 %results

@@ -1,6 +1,7 @@
 function result=grossberg(l,input_data,expected,epoch)
-	if (epoch>0)
-		global layers
+global layers
+	if (layers{l}.learn && epoch>0)
+		
 		input = [zeros(size(input_data,1),1) input_data];
 		coeff =layers{l}.coeffs(epoch);
 		output = layers{l}.activation_function([zeros(size(input_data,1),1) input_data]*layers{l}.weights');
@@ -23,6 +24,6 @@ function result=grossberg(l,input_data,expected,epoch)
 		end
 	result = output;
         else
-		result = [];
+		result = layers{l}.activation_function([zeros(size(input_data,1),1) input_data]*layers{l}.weights');
 	endif
 endfunction

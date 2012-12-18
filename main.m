@@ -54,6 +54,7 @@ end
 input_data
 answers
 layers{1}.weights
+layers{2}.weights
 answers-expected
 
 
