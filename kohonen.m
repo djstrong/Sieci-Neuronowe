@@ -77,13 +77,22 @@ if (layers{l}.learn && epoch>0)
   %end
 endif
 results = zeros(inputs,layers{l}.neurons);
-for n=1:layers{l}.neurons
-    tmp = zeros(inputs,1);
-    for i=1:inputs
-		tmp(i,1) = dot(input_data(i,:),layers{l}.weights(n,2:end));
+%results
+
+for i=1:inputs
+    tmp = zeros(layers{l}.neurons,1);
+    for n=1:layers{l}.neurons
+		tmp(n,1) = dot(input_data(i,:),layers{l}.weights(n,2:end));
     end
-    results(n, find(tmp==max(tmp)) ) = 1;
+    %n
+    %layers{l}.weights
+    %results
+    %tmp
+    %find(tmp==max(tmp))
+    results(i, find(tmp==max(tmp)) ) = 1;
+    %results
 end
+%results
 result = results;
 endfunction
 
