@@ -12,7 +12,7 @@ function result=grossberg(l,input_data,expected,epoch)
 			row = input(in,1:end);
 			[winner_weight,win_pos] = max(row);
 			for n=1:layers{l}.neurons
-			   if (strcmp(layers{l}.rule,'widrow')==0)
+			   if (strcmp(layers{l}.rule,'widrow')==1)
 				diff = coeff*(expected(in,n)-layers{l}.weights(n,win_pos));
 				layers{l}.weights(n,win_pos) += diff;
 			   else %delta
