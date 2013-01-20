@@ -24,30 +24,34 @@ input_rows = size(input_data, 1);
 
 answers=input_data;
 for step=1:learn_steps
-	answers = input_data;
-	for i=1:length(layers)
-	    layer = layers{i};
-	    if(find(layers{i}.epochs==step))
-		epochs{i} = find(layer.epochs==step);
-		printf("layer %d epoch=%d\n",i,epochs{i});
-		print = true;
-	    endif
-	    if (strcmp(layer.type,'normal')==1)
-		answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
-	    elseif (strcmp(layer.type,'kohonen')==1)
-		answers = kohonen(i,answers,step,epochs{i});
-		if(print)
-			answers
-			print = false;
-		endif 
-	    elseif (strcmp(layer.type,'grossberg')==1)
-		answers = grossberg(i,answers,expected,epochs{i});
-		if(print)
-			answers
-			print = false;
-		endif 
-	    endif
-	end
+        if (strcmp(layers{1}.type,'bp')==1)
+            answers = bp(input_data, expected, step)
+        else
+            answers = input_data;
+            for i=1:length(layers)
+                layer = layers{i};
+                if(find(layers{i}.epochs==step))
+                    epochs{i} = find(layer.epochs==step);
+                    printf("layer %d epoch=%d\n",i,epochs{i});
+                    print = true;
+                endif
+                if (strcmp(layer.type,'normal')==1)
+                    answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
+                elseif (strcmp(layer.type,'kohonen')==1)
+                    answers = kohonen(i,answers,step,epochs{i});
+                    if(print)
+                            answers
+                            print = false;
+                    endif 
+                elseif (strcmp(layer.type,'grossberg')==1)
+                    answers = grossberg(i,answers,expected,epochs{i});
+                    if(print)
+                            answers
+                            print = false;
+                    endif 
+                endif
+            end
+        endif
 end
 
 % show answers
