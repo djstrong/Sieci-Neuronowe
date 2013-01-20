@@ -27,8 +27,9 @@ function result=bp(input_data,expected,step)
 %  expected
 %  answers
 %  input_data
-  deltas = eta * ((expected-answers) .* (1-answers) .* answers) * input_data
-  delta_bias = 0;
-  layers{1}.weights = layers{1}.weights +  [delta_bias*ones(input_rows,1) deltas];
+  gradient = ((expected-answers) .* (1-answers) .* answers)
+  deltas = eta * gradient * input_data
+  delta_bias = eta * gradient * ones(input_rows,1)
+  layers{1}.weights = layers{1}.weights +  [delta_bias deltas];
 
 endfunction
