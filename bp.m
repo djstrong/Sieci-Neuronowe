@@ -19,12 +19,16 @@ eta = 0.3;
     delta = {};
     j=length(layers);
     delta{j} = ((1-a{j+1}) .* a{j+1}) .* (output-a{j+1});
-    layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}];
+    layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}] + 0.1*layers{j}.delta;
+    layers{j}.delta = eta * delta{j}' *[1 a{j}];
 
     j=1;
 
     delta{j} = ((1-a{j+1}) .* a{j+1}) .* (layers{j+1}.weights*delta{j+1})(:,2:end);
-    layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}];
+    layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}] + 0.1*layers{j}.delta;
+    layers{j}.delta = eta * delta{j}' *[1 a{j}];
+    
+
 
 %    for j=length(layers)-1:-1:1
 %      %delta{j} = layers{j+1}.weights.*delta{j+1}' ; %?
