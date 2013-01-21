@@ -2,6 +2,7 @@ function result=bp(input_data,expected,stage)
   global layers
   global etas
   global momentums
+  global learn
   input_rows = size(input_data, 1);
   eta = etas(stage);
   momentum = momentums(stage);
@@ -21,19 +22,21 @@ function result=bp(input_data,expected,stage)
     endfor
     r{i}=answers;
 
+    if (learn==true)
     delta = {};
     j=length(layers);
     delta{j} = ((1-a{j+1}) .* a{j+1}) .* (output-a{j+1});
     layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}] + momentum*layers{j}.delta;
     layers{j}.delta = eta * delta{j}' *[1 a{j}];
 
-    j=1;
+    for j=length(layers)-1:-1:1
+    %j=1;
 
-    delta{j} = ((1-a{j+1}) .* a{j+1}) .* (layers{j+1}.weights*delta{j+1})(:,2:end);
-    layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}] + momentum*layers{j}.delta;
-    layers{j}.delta = eta * delta{j}' *[1 a{j}];
-    %a
-
+      delta{j} = ((1-a{j+1}) .* a{j+1}) .* (layers{j+1}.weights*delta{j+1})(:,2:end);
+      layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}] + momentum*layers{j}.delta;
+      layers{j}.delta = eta * delta{j}' *[1 a{j}];
+    endfor
+    endif
   endfor
 
   result = cell2mat(r)';
