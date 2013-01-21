@@ -39,13 +39,27 @@ function result=bp(input_data,expected,step)
 
   %expected = layers{length(layers)}.weights .* [delta_bias deltas]
 
-  %for i=length(layers)-1:-1:1
+
+
+  for i=length(layers)-1:-1:1
+    %mysle, ze mozna posumowac gradient kolumnami, czyli gradient= sum(gradient, kolumnami). Powinno to ulatwic sprawe
+    %g = ∑ mi * ei ... (for i=1 to r)
+    g = gradient*layers{i+1}.weights
+    %e = z * (1 - z) * g ... Error at the hidden layer neuron
+    e = [ones(size(a{i+1},1), 1) (a{i+1} .* (1-a{i+1}))] .* g
+    %Δθ = λ * e ... The change in θ
+    del = eta * e
+    %Δwi = Δθ * xi ... The change in weight i
+     %wtf x?
+    delw = del .* [ones(size(a{i+1},1), 1) a{i+1}]
+    layers{i}.weights = layers{i}.weights +  delw
+
     %a{i+1}
   %  gradient = ((expected-a{i+1}) .* (1-a{i+1}) .* a{i+1})
   %  deltas = eta * gradient' * a{i} %input_data
     %delta_bias = eta * gradient' * ones(input_rows,1)
   %  layers{i}.weights = layers{i}.weights +  deltas;
-  %endfor
+  endfor
 
 
 
