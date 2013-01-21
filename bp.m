@@ -4,6 +4,9 @@ function result=bp(input_data,expected,step)
 
   answers=input_data;
 
+  a={}
+  a{1}=input_data;
+
   for i=1:length(layers)
     layer = layers{i};
     if(find(layers{i}.epochs==step))
@@ -13,6 +16,7 @@ function result=bp(input_data,expected,step)
     endif
         
     answers = layer.activation_function([layer.bias*ones(input_rows,1) answers]*layer.weights');
+    a{i+1}=answers;
   endfor
 
   result=answers;
@@ -28,10 +32,22 @@ function result=bp(input_data,expected,step)
 %  answers
 %  input_data
 
-  gradient = ((expected-answers) .* (1-answers) .* answers)
-  deltas = eta * gradient' * input_data
+  gradient = ((expected-a{length(layers)+1}) .* (1-a{length(layers)+1}) .* a{length(layers)+1})
+  deltas = eta * gradient' * a{length(layers)}%input_data
   delta_bias = eta * gradient' * ones(input_rows,1)
-%layers{1}.weights  
-layers{1}.weights = layers{1}.weights +  [delta_bias deltas];
+  layers{length(layers)}.weights = layers{length(layers)}.weights +  [delta_bias deltas];
+
+  %expected = layers{length(layers)}.weights .* [delta_bias deltas]
+
+  %for i=length(layers)-1:-1:1
+    %a{i+1}
+  %  gradient = ((expected-a{i+1}) .* (1-a{i+1}) .* a{i+1})
+  %  deltas = eta * gradient' * a{i} %input_data
+    %delta_bias = eta * gradient' * ones(input_rows,1)
+  %  layers{i}.weights = layers{i}.weights +  deltas;
+  %endfor
+
+
+
 %layers{1}.weights 
 endfunction
