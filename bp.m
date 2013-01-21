@@ -6,7 +6,7 @@ function result=bp(input_data,expected,stage)
   eta = etas(stage);
   momentum = momentums(stage);
   
-
+  r={};
   answers=input_data;
   for i=1:input_rows
     input = input_data(i,:);
@@ -19,6 +19,7 @@ function result=bp(input_data,expected,stage)
       answers = layer.activation_function([layer.bias*ones(1,1) answers]*layer.weights');
       a{j+1}=answers;
     endfor
+    r{i}=answers;
 
     delta = {};
     j=length(layers);
@@ -31,11 +32,11 @@ function result=bp(input_data,expected,stage)
     delta{j} = ((1-a{j+1}) .* a{j+1}) .* (layers{j+1}.weights*delta{j+1})(:,2:end);
     layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}] + momentum*layers{j}.delta;
     layers{j}.delta = eta * delta{j}' *[1 a{j}];
-    a
+    %a
 
   endfor
 
-
+  result = cell2mat(r)';
   return
   a={}
   a{1}=input_data;
