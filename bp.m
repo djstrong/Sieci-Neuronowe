@@ -3,7 +3,7 @@ function result=bp(input_data,expected,step)
   input_rows = size(input_data, 1);
 
   answers=input_data;
-eta = 0.6;
+eta = 0.3;
   for i=1:input_rows
     input = input_data(i,:);
     output = expected(i,:);
@@ -21,23 +21,30 @@ eta = 0.6;
     delta{j} = ((1-a{j+1}) .* a{j+1}) .* (output-a{j+1});
     layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}];
 
+    j=1;
 
-    for j=length(layers)-1:-1:1
-      delta{j} = layers{j+1}.weights.*delta{j+1}'; %?
-    endfor
+    delta{j} = ((1-a{j+1}) .* a{j+1}) .* (layers{j+1}.weights*delta{j+1})(:,2:end);
+    layers{j}.weights = layers{j}.weights+eta * delta{j}' *[1 a{j}];
 
-    for j=1:length(layers)-1
+%    for j=length(layers)-1:-1:1
+%      %delta{j} = layers{j+1}.weights.*delta{j+1}' ; %?
+%      delta{j} = layers{j+1}.weights.*delta{j+1}' ; %?
+%      delta{j} = sum(delta{j}(:,2:end)) .* ((1-a{j+1}) .* a{j+1});
+%    endfor
+
+%    for j=1:length(layers)-1
 %  j
-      layer = layers{j};
+%      layer = layers{j};
 %delta{j}
        %layer.weights
 %((1-a{j+1}) .* a{j+1})
 %a{j}
 %delta{j}
 %delta{j}(:,2:end)
-sum(delta{j}(:,2:end))
-      layer.weights = layer.weights+eta* (sum(delta{j}(:,2:end)) .* ((1-a{j+1}) .* a{j+1}))' *[1 a{j}];
-    endfor
+%sum(delta{j}(:,2:end))
+    %  layers{j}.weights = layers{j}.weights+eta* (sum(delta{j}(:,2:end)) .* ((1-a{j+1}) .* a{j+1}))' *[1 a{j}];
+%layers{j}.weights = layers{j}.weights+eta* (delta{j})' *[1 a{j}];
+%    endfor
     a
 
   endfor
