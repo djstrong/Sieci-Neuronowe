@@ -25,7 +25,11 @@ input_rows = size(input_data, 1);
 answers=input_data;
 for step=1:learn_steps
         if (strcmp(layers{1}.type,'bp')==1)
-            answers = bp(input_data, expected, step)
+		if(find(stages==step))
+                    stage = find(stages==step);
+                    printf("layer %d epoch=%d\n",i,stage);
+                endif
+            answers = bp(input_data, expected, stage)
         else
             answers = input_data;
             for i=1:length(layers)
