@@ -29,7 +29,7 @@ for step=1:learn_steps
                     stage = find(stages==step);
                     printf("layer %d epoch=%d\n",i,stage);
                 endif
-            answers = bp(input_data, expected, stage)
+            answers = bp(input_data, expected, stage);
         else
             answers = input_data;
             for i=1:length(layers)
@@ -62,13 +62,13 @@ end
 input_data
 answers
 layers{1}.weights
-layers{2}.weights
+%layers{2}.weights
 answers-expected
 
 
 
-if (size(expected,2)==1 && size(input_data,1)==size(expected,1))
-  printf('Błąd: %0.4f\n', mean((answers-expected).^2));
+if (size(input_data,1)==size(expected,1))
+  printf('Błąd: %0.4f\n', sqrt(mean(sum((answers-expected).^2, 2))));
 endif
 
 % plot chart if 2 inputs and 1 output

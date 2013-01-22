@@ -39,7 +39,11 @@ function result=bp(input_data,expected,stage)
     endif
   endfor
 
-  result = cell2mat(r)';
+  result = zeros(length(r), length(r{1}));
+  for j=1:length(r)
+    result(j,:)=r{j};
+  endfor
+
   return
   a={}
   a{1}=input_data;
